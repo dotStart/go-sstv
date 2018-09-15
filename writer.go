@@ -36,7 +36,7 @@ const blackFrequency = 1500
 const whiteFrequency = 2300
 
 type audioWriter struct {
-  gen *Oscillator
+  gen *oscillator
   buf *audio.FloatBuffer
 }
 

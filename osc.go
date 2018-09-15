@@ -19,15 +19,15 @@ package sstv
 import "math"
 
 // provides a stateful sine wave oscillator
-type Oscillator struct {
+type oscillator struct {
   sampleRate int
   amplitude  float64
   phase      float64
 }
 
 // creates a new oscillator with the indicated sample rate
-func newOscillator(sampleRate int, amplitude float64) *Oscillator {
-  return &Oscillator{
+func newOscillator(sampleRate int, amplitude float64) *oscillator {
+  return &oscillator{
     sampleRate: sampleRate,
     amplitude:  amplitude,
     phase:      0,
@@ -35,13 +35,13 @@ func newOscillator(sampleRate int, amplitude float64) *Oscillator {
 }
 
 // generates the value for a single sample of the indicated frequency
-func (osc *Oscillator) sample(frequency float64) float64 {
+func (osc *oscillator) sample(frequency float64) float64 {
   osc.phase += frequency * 2 * math.Pi / float64(osc.sampleRate)
   return math.Sin(osc.phase) * osc.amplitude
 }
 
 // generates a signal of the indicated length (in milliseconds)
-func (osc *Oscillator) signal(frequency float64, length float64) []float64 {
+func (osc *oscillator) signal(frequency float64, length float64) []float64 {
   samples := int(math.Round(length / 1000 * float64(osc.sampleRate)))
   values := make([]float64, samples)
 
